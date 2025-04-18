@@ -91,7 +91,7 @@ exploit -j</pre>
 
 - Ensure all default security features in 'Exploit Protection' are enabled
 
-##### Optional 
+#### Optional 
 - Take a registry snapshot to compare before and after the attack through 'RegShot'
 
 ![image](https://github.com/user-attachments/assets/c9d99d6f-f96e-476a-b43c-fbb99117b9e6)
