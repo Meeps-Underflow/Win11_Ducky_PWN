@@ -91,11 +91,6 @@ exploit -j</pre>
 
 - Ensure all default security features in 'Exploit Protection' are enabled
 
-#### Optional 
-- Take a registry snapshot to compare before and after the attack through 'RegShot'
-
-![image](https://github.com/user-attachments/assets/c9d99d6f-f96e-476a-b43c-fbb99117b9e6)
-
 #### Deploying the Duck
 - Now that yor Windows Machine is up and running and you have confirmed all the secuirty features you wish to confirm its time to deploy the duck
 - Plug in your USB Rubber Ducky into your Windows 11 Machine and sit back and watch
@@ -129,10 +124,10 @@ exploit -j</pre>
 - As you can see a new session was created from the machine we previusly exploited verifying that our persestence works
 
 #### Test Microsoft Defender Scan
-- Lets now test to see if MD quick scan can detect our malware
+- Lets now test to see if Microsoft Defender quick scan can detect our malware
 
 ##### Test 1
-- First we will run quick scan without removing our C drive exclusion
+- First we will run quick scan 
 
 ![image](https://github.com/user-attachments/assets/bc4072f0-1f59-4356-83ff-1b6171eb1114)
 
@@ -140,31 +135,10 @@ exploit -j</pre>
 
 ![image](https://github.com/user-attachments/assets/cc789579-199e-48be-ba83-c845ec55c1e0)
 
-##### Optional RegShot
-- If you decided to take a registry snapshot before executing the attack now would be the time to take another shot and compare the two
-
-![image](https://github.com/user-attachments/assets/cbd6c26c-b7f7-47b1-930e-4c723220294b)
-
-- As you can see about at the bottom there the registry modification that involves an "unknown" exe nice3.exe
 
 ##### Test 2
 - Now lets remove that exclusion on the C drive and run a quick scan again to see if that finds our malware
 
-![image](https://github.com/user-attachments/assets/6f0e3199-9733-4c25-bbb4-a1c863d5fb56)
-
-![image](https://github.com/user-attachments/assets/79d93d3e-1c0f-4f93-88e5-75d5561fc386)
-
-- As you can see after removing the exclusion the scan was able to find our malware
-- Lets take action and 'Remove' the malware from our windows system 
-- On our Kali Machine in our msf6 session we can see that our connection dies
-- Even if we restart the Windows 11 machine it will not get another connection becasue Windows Defender removed the malware entirely
-
-![image](https://github.com/user-attachments/assets/120b8017-dc07-497a-8152-b0eff95d6dca)
 
 
-### Contributions Welcome
-- If anyone would like to contribute or add onto anything that the ducky script does please do so.
-- Some ideas I have are revolved around completely covering my history of activity
-- Obviosuly I would like to have a seperate machine to act as proxy in between victim - proxy - attacker
-- Any other ideas would be awesome thanks
 
