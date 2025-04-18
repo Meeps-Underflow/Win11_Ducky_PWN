@@ -5,7 +5,7 @@
 ## Description 
 For this project I utilized a USB Rubber Ducky from Hak5 and the Kali Linux tools 'msfvenom', 'msfconsole', and 'meterpreter'. Through these tools I deployed a reverse shell, esatblished persistence, 
 and cleaned up my suspicous activity. For my attacking machine I used Kali Linux and my victim machine Windows 11 (with all default security enabled). This attack is able to bypass all Windows 11 default security 
-features and maintain undetected persetence through the use of modifying the Default User's Windows Registers.
+features and maintain undetected persistence through the use of modifying the Default User's Windows Registers.
 
 ## Video Demo
 [![Watch the Demo](https://i9.ytimg.com/vi/uH7h9ziv1Kg/mq1.jpg?sqp=CPj-h8AG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGD4gVChlMA8=&rs=AOn4CLBKcuQagU35TL-V5jBWEWH2MJolEA)](https://youtu.be/uH7h9ziv1Kg)
