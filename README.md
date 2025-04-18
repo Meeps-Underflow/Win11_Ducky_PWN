@@ -8,7 +8,7 @@ and cleaned up my suspicous activity. For my attacking machine I used Kali Linux
 features and maintain undetected persistence through the use of modifying the Default User's Windows Registers.
 
 ## Video Demo
-[![Watch the Demo](https://i9.ytimg.com/vi/uH7h9ziv1Kg/mq1.jpg?sqp=CPj-h8AG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGD4gVChlMA8=&rs=AOn4CLBKcuQagU35TL-V5jBWEWH2MJolEA)](https://youtu.be/uH7h9ziv1Kg)
+[![Watch the Demo](https://github.com/user-attachments/assets/ac264547-8e64-49c4-9b07-969cead7699f)](https://youtu.be/uH7h9ziv1Kg)
 
 ## Walkthrough
 
